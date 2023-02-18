@@ -7,3 +7,6 @@
 
 ## Cloud shell 
 ![AWS Shell](./images/Aws_shell.png)
+
+## AWS Billing Alarm
+![Billing_alarm](./images/AWS_alarm.png)
