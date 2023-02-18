@@ -4,3 +4,6 @@
 
 ## Conceptional diagram ([LINK](https://lucid.app/lucidchart/cc118109-ba31-41da-b485-a091ebc08b22/edit?viewport_loc=-730%2C-516%2C1968%2C1584%2C0_0&invitationId=inv_ea13b0c8-d2cc-450e-9532-a268f10331f8))
 ![Conceptional diagram](./images/Conceptional_diagram.png)
+
+## Cloud shell 
+![AWS Shell](./images/Aws_shell.png)
