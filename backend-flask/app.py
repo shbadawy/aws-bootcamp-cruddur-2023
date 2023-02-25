@@ -3,6 +3,7 @@ from flask import request
 from flask_cors import CORS, cross_origin
 import os
 
+from services.notifications_activities import *
 from services.home_activities import *
 from services.user_activities import *
 from services.create_activity import *
@@ -68,6 +69,14 @@ def data_home():
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
 def data_handle(handle):
   model = UserActivities.run(handle)
+  if model['errors'] is not None:
+    return model['errors'], 422
+  else:
+    return model['data'], 200
+
+@app.route("/api/activities/notification", methods=['GET'])
+def notificaitons_handle():
+  model = NotificationsActivities.run()
   if model['errors'] is not None:
     return model['errors'], 422
   else:
