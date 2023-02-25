@@ -74,7 +74,7 @@ def data_handle(handle):
   else:
     return model['data'], 200
 
-@app.route("/api/activities/notification", methods=['GET'])
+@app.route("/api/activities/notifications", methods=['GET'])
 def notificaitons_handle():
   model = NotificationsActivities.run()
   if model['errors'] is not None:
