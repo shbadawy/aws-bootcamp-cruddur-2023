@@ -25,6 +25,7 @@ tasks:
     command: |
       cd frontend-react-js
       npm i
+      cd ..
 
 
 ports:
