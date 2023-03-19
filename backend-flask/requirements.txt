@@ -9,3 +9,5 @@ aws-xray-sdk
 watchtower
 blinker
 rollbar
+psycopg[binary]
+psycopg[pool]
