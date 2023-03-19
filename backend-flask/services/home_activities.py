@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from lib.db import pool, query_wrap_array
 from opentelemetry import trace
+import os
 
 
 tracer = trace.get_tracer("Home tracer")
@@ -31,6 +32,8 @@ class HomeActivities:
       """)
 
       print(sql)
+
+
 
       with pool.connection() as conn:
         with conn.cursor() as cur:

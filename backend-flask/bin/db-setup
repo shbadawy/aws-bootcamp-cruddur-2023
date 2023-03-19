@@ -1,5 +1,5 @@
 #! /usr/bin/bash
--e # stop if it fails at any point
+#-e # stop if it fails at any point
 
 bin_path="$(realpath .)/backend-flask/bin"
 
