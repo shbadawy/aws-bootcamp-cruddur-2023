@@ -15,12 +15,12 @@ services:
       ROLLBAR_ACCESS_TOKEN: "${ROLLBAR_ACCESS_TOKEN}"
       #CONNECTION_URL: "${CONNECTION_URL}"
       CONNECTION_URL: "postgresql://postgres:password@db:5432/cruddur"
-
     build: ./backend-flask
     ports:
       - "4567:4567"
     volumes:
       - ./backend-flask:/backend-flask
+      
   frontend-react-js:
     environment:
       REACT_APP_BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
@@ -45,6 +45,7 @@ services:
     volumes:
       - "./docker/dynamodb:/home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
+  
   db:
     image: postgres:13-alpine
     restart: always
@@ -55,6 +56,9 @@ services:
       - '5432:5432'
     volumes: 
       - db:/var/lib/postgresql/data
+    #   - ./backend-flask/bin:/backend-flask/bin
+    #   - ./backend-flask/db:/backend-flask/db
+    # command: "ls backend-flask ;chmod u+x backend-flask/bin/*; ./backend-flask/bin/db-setup"
     
   xray-daemon:
     image: "amazon/aws-xray-daemon"
