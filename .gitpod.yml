@@ -27,7 +27,6 @@ tasks:
       npm i
       cd ..
 
-
 ports:
   - name: frontend
     port: 3000
@@ -38,6 +37,9 @@ ports:
     visibility: public
   - name: xray-daemon
     port: 2000
+    visibility: public
+  - name: postgres
+    port: 5432
     visibility: public
 
     

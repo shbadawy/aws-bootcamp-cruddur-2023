@@ -12,7 +12,7 @@ else
   URL=$CONNECTION_URL
 fi
 
-echo $NO_DB_CONNECTION_URL
+#NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$URL")
+# psql $NO_DB_CONNECTION_URL cruddur < $schema_path
 
-NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$URL")
-psql $NO_DB_CONNECTION_URL cruddur < $schema_path
+psql $URL < $schema_path

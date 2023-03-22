@@ -4,5 +4,7 @@ seed_path="$(realpath .)/backend-flask/db/seed.sql"
 
 echo $seed_path
 
-NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
-psql $NO_DB_CONNECTION_URL cruddur < $seed_path
+# NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
+#psql $NO_DB_CONNECTION_URL cruddur < $seed_path
+
+psql $CONNECTION_URL < $seed_path
