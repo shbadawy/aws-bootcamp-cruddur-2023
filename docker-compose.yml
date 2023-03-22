@@ -14,7 +14,7 @@ services:
       AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
       ROLLBAR_ACCESS_TOKEN: "${ROLLBAR_ACCESS_TOKEN}"
       #CONNECTION_URL: "${CONNECTION_URL}"
-      CONNECTION_URL: "postgresql://postgres:password@db:5432/cruddur"
+      CONNECTION_URL: "postgresql://postgres:password@127.0.0.1:5432/cruddur"
     build: ./backend-flask
     ports:
       - "4567:4567"
