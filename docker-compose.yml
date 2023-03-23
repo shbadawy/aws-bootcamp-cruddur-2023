@@ -56,6 +56,10 @@ services:
       - '5432:5432'
     volumes: 
       - db:/var/lib/postgresql/data
+    entrypoint: ["/bin/sh","-c"]
+    command: | 
+      export GITPOD_IP=$(curl ifconfig.me)
+      source "$THEIA_WORKSPACE_ROOT/backend-flask/db-update-sg-rule"
     
   xray-daemon:
     image: "amazon/aws-xray-daemon"
