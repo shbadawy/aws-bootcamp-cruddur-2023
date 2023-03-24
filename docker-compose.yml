@@ -13,7 +13,6 @@ services:
       AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
       AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
       ROLLBAR_ACCESS_TOKEN: "${ROLLBAR_ACCESS_TOKEN}"
-      #CONNECTION_URL: "${CONNECTION_URL}"
       CONNECTION_URL: "postgresql://postgres:password@db:5432/cruddur"
     build: ./backend-flask
     ports:
@@ -56,11 +55,7 @@ services:
       - '5432:5432'
     volumes: 
       - db:/var/lib/postgresql/data
-    entrypoint: ["/bin/sh","-c"]
-    command: | 
-      export GITPOD_IP=$(curl ifconfig.me)
-      source "$THEIA_WORKSPACE_ROOT/backend-flask/db-update-sg-rule"
-    
+
   xray-daemon:
     image: "amazon/aws-xray-daemon"
     environment:

@@ -26,6 +26,10 @@ tasks:
       cd frontend-react-js
       npm i
       cd ..
+  - name: configure-aws-sg
+    command: |
+      export GITPOD_IP=$(curl ifconfig.me)
+      source "$THEIA_WORKSPACE_ROOT/backend-flask/db-update-sg-rule"
 
 ports:
   - name: frontend
