@@ -15,6 +15,8 @@ tasks:
       sudo ./aws/install
       rm awscliv2.zip
       cd $THEIA_WORKSPACE_ROOT
+      export GITPOD_IP=$(curl ifconfig.me)
+      source "$THEIA_WORKSPACE_ROOT/backend-flask/bin/db-update-sg-rule"
   - name: postgres
     init: |
       curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
@@ -26,10 +28,6 @@ tasks:
       cd frontend-react-js
       npm i
       cd ..
-  - name: configure-aws-sg
-    command: |
-      export GITPOD_IP=$(curl ifconfig.me)
-      source "$THEIA_WORKSPACE_ROOT/backend-flask/bin/db-update-sg-rule"
 
 ports:
   - name: frontend
