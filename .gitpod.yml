@@ -8,6 +8,7 @@ tasks:
   - name: aws-cli
     env:
       AWS_CLI_AUTO_PROMPT: on-partial
+      GITPOD_IP: $(curl ifconfig.me)
     init: |
       cd /workspace
       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -16,6 +17,7 @@ tasks:
       rm awscliv2.zip
       cd $THEIA_WORKSPACE_ROOT
       export GITPOD_IP=$(curl ifconfig.me)
+      echo $GITPOD_IP
       source "$THEIA_WORKSPACE_ROOT/backend-flask/bin/db-update-sg-rule"
   - name: postgres
     init: |
