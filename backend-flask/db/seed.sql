@@ -16,4 +16,9 @@ VALUES
     (SELECT uuid from public.users WHERE users.handle = 'shimaa' LIMIT 1 ),
     'Hello World!!!!!',
     current_timestamp + interval '5 day'
+  ),
+   (
+    (SELECT uuid from public.users WHERE users.handle = 'bayko' LIMIT 1 ),
+    'Hello World!!!!!',
+    current_timestamp + interval '1 day'
   );
