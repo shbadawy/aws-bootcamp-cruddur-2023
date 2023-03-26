@@ -1,7 +1,9 @@
 import uuid
 from datetime import datetime, timedelta, timezone
+from  lib.db import pool
+
 class CreateActivity:
-  def run(message, user_handle, ttl):
+  def run(message, user_handle, ttl, display_name):
     model = {
       'errors': None,
       'data': None
@@ -42,10 +44,42 @@ class CreateActivity:
     else:
       model['data'] = {
         'uuid': uuid.uuid4(),
-        'display_name': 'Andrew Brown',
+        'display_name': display_name,
         'handle':  user_handle,
         'message': message,
         'created_at': now.isoformat(),
         'expires_at': (now + ttl_offset).isoformat()
       }
-    return model
+
+      sql = f"""
+            INSERT INTO public.activities (
+            uuid,
+            message,
+            expires_at
+          )
+          VALUES (
+            (SELECT uuid 
+              FROM public.users 
+              WHERE users.handle = %(handle)s
+              LIMIT 1
+            ),
+            %(message)s,
+            %(expires_at)s
+          ) RETURNING uuid;
+      """
+      
+      expires_at = (now + ttl_offset).isoformat()
+
+      with pool.connection() as conn:
+        with conn.cursor() as cur:
+          cur.execute(sql,{
+            'handle': user_handle,
+            'message': message,
+            'expires_at': expires_at
+          })
+          # this will return a tuple
+          # the first field being the data
+          results = cur.fetchone()
+          # print('#######')
+          # print(results)
+    return model 
