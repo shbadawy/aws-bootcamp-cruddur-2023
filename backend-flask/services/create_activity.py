@@ -8,8 +8,23 @@ class CreateActivity:
       'errors': None,
       'data': None
     }
-
-    now = datetime.now(timezone.utc).astimezone()
+    
+    sql = f"""
+            INSERT INTO public.activities (
+            uuid,
+            message,
+            expires_at
+          )
+          VALUES (
+            (SELECT uuid 
+              FROM public.users 
+              WHERE users.handle = %(handle)s
+              LIMIT 1
+            ),
+            %(message)s,
+            %(expires_at)s
+          ) RETURNING uuid;
+      """
 
     if (ttl == '30-days'):
       ttl_offset = timedelta(days=30) 
@@ -36,6 +51,20 @@ class CreateActivity:
     elif len(message) > 280:
       model['errors'] = ['message_exceed_max_chars'] 
 
+    now = datetime.now(timezone.utc).astimezone()
+    expires_at = (now + ttl_offset).isoformat()
+
+    with pool.connection() as conn:
+      with conn.cursor() as cur:
+        cur.execute(sql,{
+          'handle': user_handle,
+          'message': message,
+          'expires_at': expires_at
+        })
+        # this will return a tuple
+        # the first field being the data
+        user_id = cur.fetchone()[0]
+
     if model['errors']:
       model['data'] = {
         'handle':  user_handle,
@@ -43,7 +72,7 @@ class CreateActivity:
       }   
     else:
       model['data'] = {
-        'uuid': uuid.uuid4(),
+        'uuid': user_id,
         'display_name': display_name,
         'handle':  user_handle,
         'message': message,
@@ -51,35 +80,4 @@ class CreateActivity:
         'expires_at': (now + ttl_offset).isoformat()
       }
 
-      sql = f"""
-            INSERT INTO public.activities (
-            uuid,
-            message,
-            expires_at
-          )
-          VALUES (
-            (SELECT uuid 
-              FROM public.users 
-              WHERE users.handle = %(handle)s
-              LIMIT 1
-            ),
-            %(message)s,
-            %(expires_at)s
-          ) RETURNING uuid;
-      """
-      
-      expires_at = (now + ttl_offset).isoformat()
-
-      with pool.connection() as conn:
-        with conn.cursor() as cur:
-          cur.execute(sql,{
-            'handle': user_handle,
-            'message': message,
-            'expires_at': expires_at
-          })
-          # this will return a tuple
-          # the first field being the data
-          results = cur.fetchone()
-          # print('#######')
-          # print(results)
     return model 
