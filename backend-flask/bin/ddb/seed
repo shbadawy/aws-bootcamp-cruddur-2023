@@ -10,7 +10,7 @@ import os
 current_path = os.path.dirname(os.path.abspath(__file__))
 parent_path = os.path.abspath(os.path.join(current_path, '..', '..'))
 sys.path.append(parent_path)
-from lib.db import db
+from lib.ddb import Ddb
 
 attrs = {'endpoint_url': 'http://localhost:8000'}
 
@@ -30,7 +30,7 @@ def get_user_uuids():
     WHERE
       users.handle IN(%(my_handle)s, %(other_handle)s)
   """
-  users = db.query_array_json(sql,{
+  users = ddb.query_array_json(sql,{
     'my_handle':  'andrewbrown',
     'other_handle': 'bayko'
   })

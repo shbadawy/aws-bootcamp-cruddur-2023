@@ -12,3 +12,4 @@ rollbar
 psycopg[binary]
 psycopg[pool]
 psycopg_pool
+boto3

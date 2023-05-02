@@ -44,5 +44,8 @@ ports:
   - name: postgres
     port: 5432
     visibility: public
+  - name: Dynamo-db
+    port: 5432
+    visibility: public
 
     
