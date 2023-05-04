@@ -6,6 +6,7 @@ import MessageGroupFeed from '../components/MessageGroupFeed';
 import checkAuth from '../lib/CheckAuth';import { useParams } from 'react-router-dom';
 
 export default function MessageGroupsPage() {
+  const [messages, setMessages] = React.useState([]);
   const [messageGroups, setMessageGroups] = React.useState([]);
   const [popped, setPopped] = React.useState([]);
   const [user, setUser] = React.useState(null);
