@@ -6,7 +6,7 @@ CREATE TABLE public.users (
   uuid UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   display_name text not null,
   handle text not null,
-  email text not null,
+  email text ,
   cognito_user_id text not null,
   created_at TIMESTAMP default current_timestamp NOT NULL
 );

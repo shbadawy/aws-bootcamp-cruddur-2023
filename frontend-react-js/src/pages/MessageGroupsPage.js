@@ -3,20 +3,21 @@ import React from "react";
 
 import DesktopNavigation  from '../components/DesktopNavigation';
 import MessageGroupFeed from '../components/MessageGroupFeed';
-import checkAuth from '../lib/CheckAuth';import { useParams } from 'react-router-dom';
+import checkAuth from '../lib/CheckAuth';
 
 export default function MessageGroupsPage() {
-  const [messages, setMessages] = React.useState([]);
   const [messageGroups, setMessageGroups] = React.useState([]);
   const [popped, setPopped] = React.useState([]);
   const [user, setUser] = React.useState(null);
-  const dataFetchedRef = React.useRef(false);const params = useParams();
+  const dataFetchedRef = React.useRef(false);
 
   const loadData = async () => {
     try {
       const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/message_groups`
       const res = await fetch(backend_url, {
-        headers: {Authorization: `Bearer ${localStorage.getItem("access_token")}`},
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`
+        },
         method: "GET"
       });
       let resJson = await res.json();
@@ -30,32 +31,14 @@ export default function MessageGroupsPage() {
     }
   };  
 
-  const loadMessageGroupData = async () => {
-    try { console.log(`UUUUUUIIIIIDDDD ${params.message_group_uuid}`);
-      const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/messages/${params.message_group_uuid}`
-      const res = await fetch(backend_url, {
-        headers: {Authorization: `Bearer ${localStorage.getItem("access_token")}`},
-        method: "GET"
-      });
-      let resJson = await res.json();
-      if (res.status === 200) { setMessages(resJson) } 
-      else { console.log(res) }
-    } catch (err) {
-      console.log(err);
-    }
-  };  
-
   React.useEffect(()=>{
     //prevents double call
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
 
     loadData();
-    loadMessageGroupData();
     checkAuth(setUser);
-
   }, [])
-
   return (
     <article>
       <DesktopNavigation user={user} active={'messages'} setPopped={setPopped} />

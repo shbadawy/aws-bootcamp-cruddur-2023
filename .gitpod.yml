@@ -29,6 +29,12 @@ tasks:
       cd frontend-react-js
       npm i
       cd ..
+  
+  - name: flask-req
+    command: |
+      cd backend-flask
+      pip install -r requirements.txt
+      cd ..
 
 ports:
   - name: frontend
