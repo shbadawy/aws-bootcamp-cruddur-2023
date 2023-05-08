@@ -52,5 +52,11 @@ def query_value(sql,params={}):
         json = cur.fetchone()
         return json[0]
 
+def query_commit(self,sql,params={}):
+  self.print_sql('commit with returning',sql,params)
+
+  pattern = r"\bRETURNING\b"
+  is_returning_id = re.search(pattern, sql)
+
 connection_url = os.getenv("CONNECTION_URL")
 pool = ConnectionPool(connection_url) 

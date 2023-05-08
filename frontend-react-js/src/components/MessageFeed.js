@@ -1,15 +1,21 @@
-import './MessageFeed.css';
-import MessageItem from './MessageItem';
+import './MessageGroupFeed.css';
+import MessageGroupItem from './MessageGroupItem';
+import MessageGroupNewItem from './MessageGroupNewItem';
+export default function MessageGroupFeed(props) {
+  let message_group_new_item;
+  if (props.otherUser) {
+    message_group_new_item = <MessageGroupNewItem user={props.otherUser} />
+  }
 
-export default function MessageFeed(props) {
   return (
-    <div className='message_feed'>
-      <div className='message_feed_heading'>
+    <div className='message_group_feed'>
+      <div className='message_group_feed_heading'>
         <div className='title'>Messages</div>
       </div>
-      <div className='message_feed_collection'>
-        {props.messages.map(message => {
-        return  <MessageItem key={message.uuid} message={message} />
+      <div className='message_group_feed_collection'>
+        {message_group_new_item}
+        {props.message_groups.map(message_group => {
+        return  <MessageGroupItem key={message_group.uuid} message_group={message_group} />
         })}
       </div>
     </div>
